@@ -1,4 +1,5 @@
 const Project = require("../models/project.model");
+const createError = require("http-errors");
 
 module.exports.list = (req, res, next) => {
   Project.find()
@@ -8,13 +9,13 @@ module.exports.list = (req, res, next) => {
 
 module.exports.create = (req, res, next) => {
   console.log(req.body);
+  req.body.authors = [req.user.id];
   Project.create(req.body)
     .then((project) => res.status(201).json(project))
     .catch(next);
 };
 
 module.exports.detail = (req, res, next) => res.json(req.project);
-
 
 module.exports.delete = (req, res, next) => {
   Project.deleteOne({ _id: req.project.id })

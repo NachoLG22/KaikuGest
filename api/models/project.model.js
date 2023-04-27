@@ -1,12 +1,17 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const projectShema = new Schema(
+const projectSchema = new Schema(
   {
     title: {
       type: String,
       required: "Project title is required",
       minlength: [4, "Project title needs at least 4 chars"],
+    },
+    authors: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true],
     },
     projectNumber: {
       type: Number,
@@ -17,7 +22,7 @@ const projectShema = new Schema(
       type: String,
       required: "Description is required",
       minlength: [4, "Description needs at least 4 chars"],
-      maxLength: [300, "Description cannot have more than 100 chars"],
+      maxLength: [150, "Description cannot have more than 150 chars"],
     },
     state: {
       type: String,
@@ -45,5 +50,5 @@ const projectShema = new Schema(
   }
 );
 
-const Project = mongoose.model("Project", projectShema);
+const Project = mongoose.model("Project", projectSchema);
 module.exports = Project;

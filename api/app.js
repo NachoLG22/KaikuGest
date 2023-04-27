@@ -16,6 +16,10 @@ const { session, loadSessionUser } = require("./config/session.config");
 app.use(express.json());
 app.use(logger("dev"));
 
+
+app.use(session);
+app.use(loadSessionUser);
+
 const api = require("./config/routes.config");
 app.use("/api/v1", api);
 
@@ -28,6 +32,10 @@ app.use((error, req, res, next) => {
   } else if (error instanceof mongoose.Error.CastError && error.path === '_id') {
     const resourceName = error.model().constructor.modelName;
     error = createError(404, `${resourceName} not found`);
+  } else if (error.message.includes("E11000")) {
+    // Duplicated keys
+    Object.keys(error.keyValue).forEach((key) => error.keyValue[key] = 'Already exists');
+    error = createError(409, { errors: error.keyValue });
   } else if (!error.status) {
     error = createError(500, error);
   }

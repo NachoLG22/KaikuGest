@@ -6,7 +6,7 @@ const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost/kaikugest";
 
 module.exports.session = session({
-  secret: process.env.SESSION_SECRET || "lavin secret",
+  secret: process.env.SESSION_SECRET || "kaiku secret",
   resave: false,
   saveUninitialized: false,
   cookie: {
