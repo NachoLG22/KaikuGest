@@ -4,18 +4,19 @@ const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const createError = require("http-errors");
+const sercure = require("./middlewares/secuere.mid");
 
 //** Load configuration */
 require("./config/db.config");
-
-
 const app = express();
 
 const { session, loadSessionUser } = require("./config/session.config");
+const cors = requiere("./config/cors.config");
 
+app.use(cors);
 app.use(express.json());
 app.use(logger("dev"));
-
+app.use(secureMid.cleanBody);
 
 app.use(session);
 app.use(loadSessionUser);
@@ -29,12 +30,17 @@ app.use((req, res, next) => next(createError(404, "Route not found")));
 app.use((error, req, res, next) => {
   if (error instanceof mongoose.Error.ValidationError) {
     error = createError(400, error);
-  } else if (error instanceof mongoose.Error.CastError && error.path === '_id') {
+  } else if (
+    error instanceof mongoose.Error.CastError &&
+    error.path === "_id"
+  ) {
     const resourceName = error.model().constructor.modelName;
     error = createError(404, `${resourceName} not found`);
   } else if (error.message.includes("E11000")) {
     // Duplicated keys
-    Object.keys(error.keyValue).forEach((key) => error.keyValue[key] = 'Already exists');
+    Object.keys(error.keyValue).forEach(
+      (key) => (error.keyValue[key] = "Already exists")
+    );
     error = createError(409, { errors: error.keyValue });
   } else if (!error.status) {
     error = createError(500, error);
