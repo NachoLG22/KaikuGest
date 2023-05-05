@@ -1,130 +1,209 @@
-import React from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import usersService from "../../services/users";
 
 function UsersForm() {
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({ mode: "onBlur" });
+  const [serverError, setServerError] = useState(undefined);
+  const navigate = useNavigate();
+
+  const onUserSubmit = async (user) => {
+    try {
+      setServerError(undefined);
+      console.debug("Registering...");
+      user = await usersService.create(user);
+      navigate("/login", { state: { user } });
+    } catch (error) {
+      const errors = error.response?.data?.errors;
+      if (errors) {
+        console.error(error.message, errors);
+        Object.keys(errors).forEach((inputName) =>
+          setError(inputName, { message: errors[inputName] })
+        );
+      } else {
+        console.error(error);
+        setServerError(error.message);
+      }
+    }
+  };
+
+  const inputClassForm =
+    "block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer";
+  const inputClassImgForm =
+    "border border-gray-300 rounded-lg px-3 py-2 leading-4 text-sm text-gray-700 bg-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200 ease-in-out";
+
   return (
-    <form>
-      <div class="relative z-0 w-full mb-6 group">
+    <form onSubmit={handleSubmit(onUserSubmit)}>
+      {serverError && (
+        <div className="alert alert-danger d-none d-lg-block">
+          {serverError}
+        </div>
+      )}
+      {/* Image
+
+      <div className="relative z-0 w-full md:w-1/2 mb-6 group">
         <input
-          type="email"
-          name="floating_email"
-          id="floating_email"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-          required
+          type="file"
+          className={`${inputClassImgForm} ${
+            errors.image ? "placeholder-red-600" : ""
+          }`}
+          placeholder="Select an image"
+          {...register("image", {
+            required: "Image is required",
+          })}
         />
+        {errors.image && (
+          <div className="text-red-600">{errors.image?.message}</div>
+        )}
+      </div> */}
+
+      {/*NAME */}
+      <div className="relative z-0 w-full mb-6 group">
+        <input
+          type="text"
+          className={`${inputClassForm} ${
+            errors.name ? "placeholder-red-600" : ""
+          }`}
+          placeholder=" "
+          {...register("name", {
+            required: "User name is required",
+          })}
+        />
+        {errors.name && (
+          <div className="text-red-600">{errors.name?.message}</div>
+        )}
+        <label
+          for="floating_anme"
+          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >
+          Your Name
+        </label>
+      </div>
+
+      {/*FISCALNAME */}
+      <div className="relative z-0 w-full mb-6 group">
+        <input
+          type="text"
+          className={`${inputClassForm} ${
+            errors.fiscalname ? "placeholder-red-600" : ""
+          }`}
+          placeholder=" "
+          {...register("fiscalname", {
+            required: "Fiscal name is required",
+          })}
+        />
+        {errors.fiscalname && (
+          <div className="text-red-600">{errors.fiscalname?.message}</div>
+        )}
+        <label
+          for="floating_fiscalname"
+          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >
+          Your Fiscal Name
+        </label>
+      </div>
+
+      {/*EMAIL */}
+      <div className="relative z-0 w-full mb-6 group">
+        <input
+          type="text"
+          className={`${inputClassForm} ${
+            errors.email ? "placeholder-red-600" : ""
+          }`}
+          placeholder=" "
+          {...register("email", {
+            required: "Email is required",
+          })}
+        />
+        {errors.email && (
+          <div className="text-red-600">{errors.email?.message}</div>
+        )}
         <label
           for="floating_email"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
-          Email address
+          example@mail.com
         </label>
       </div>
-      <div class="relative z-0 w-full mb-6 group">
+
+      {/*PASSWORD */}
+      <div className="relative z-0 w-full mb-6 group">
         <input
           type="password"
-          name="floating_password"
-          id="floating_password"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          className={`${inputClassForm} ${
+            errors.password ? "placeholder-red-600" : ""
+          }`}
           placeholder=" "
-          required
+          {...register("password", {
+            required: "Password is required",
+          })}
         />
+        {errors.password && (
+          <div className="text-red-600">{errors.password?.message}</div>
+        )}
         <label
           for="floating_password"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
-          Password
+          Your password
         </label>
       </div>
-      <div class="relative z-0 w-full mb-6 group">
+      {/*DESCRIPTION */}
+      <div className="relative z-0 w-full mb-6 group">
         <input
-          type="password"
-          name="repeat_password"
-          id="floating_repeat_password"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          type="text"
+          className={`${inputClassForm} ${
+            errors.description ? "placeholder-red-600" : ""
+          }`}
           placeholder=" "
-          required
+          {...register("description", {
+            required: "Description is required",
+          })}
         />
+        {errors.description && (
+          <div className="text-red-600">{errors.description?.message}</div>
+        )}
         <label
-          for="floating_repeat_password"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          for="floating_description"
+          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
-          Confirm password
+          Your description
         </label>
       </div>
-      <div class="grid md:grid-cols-2 md:gap-6">
-        <div class="relative z-0 w-full mb-6 group">
-          <input
-            type="text"
-            name="floating_first_name"
-            id="floating_first_name"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
-            required
-          />
-          <label
-            for="floating_first_name"
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >
-            First name
-          </label>
-        </div>
-        <div class="relative z-0 w-full mb-6 group">
-          <input
-            type="text"
-            name="floating_last_name"
-            id="floating_last_name"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
-            required
-          />
-          <label
-            for="floating_last_name"
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >
-            Last name
-          </label>
-        </div>
-      </div>
-      <div class="grid md:grid-cols-2 md:gap-6">
-        <div class="relative z-0 w-full mb-6 group">
-          <input
-            type="tel"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-            name="floating_phone"
-            id="floating_phone"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
-            required
-          />
-          <label
-            for="floating_phone"
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >
-            Phone number (123-456-7890)
-          </label>
-        </div>
-        <div class="relative z-0 w-full mb-6 group">
-          <input
-            type="text"
-            name="floating_company"
-            id="floating_company"
-            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
-            required
-          />
-          <label
-            for="floating_company"
-            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >
-            Company (Ex. Google)
-          </label>
-        </div>
-      </div>
+      {/* LOCATION
+      <div className="relative z-0 w-full mb-6 group">
+        <input
+          type="text"
+          className={`${inputClassForm} ${
+            errors.location ? "placeholder-red-600" : ""
+          }`}
+          placeholder=" "
+          {...register("location", {
+            required: "location is required",
+          })}
+        />
+        {errors.location && (
+          <div className="text-red-600">{errors.location?.message}</div>
+        )}
+        <label
+          for="floating_location"
+          className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >
+          Your location
+        </label>
+      </div> */}
+
       <button
         type="submit"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
-        Submit
+        Register
       </button>
     </form>
   );

@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import PageLayout from "../componets/layout/PageLayout";
+import UserDetail from "../componets/users/UserDetail";
 
 function UserPage() {
   return (
-    <div>UserPage</div>
-  )
+    <PageLayout title="Mi Perfil">
+      <UserDetail />
+    </PageLayout>
+  );
 }
 
-export default UserPage
+export default UserPage;

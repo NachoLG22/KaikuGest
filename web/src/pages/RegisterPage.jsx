@@ -6,8 +6,8 @@ import logo from "../assets/img/Logo.jpg";
 
 function RegisterPage() {
   return (
-    <PageLayout title="Sign up">
-      <div className="row justify-content-center">
+    <PageLayout>
+      <div className="row justify-content-center m-4">
         <div className="col-12 col-md-6">
           <div className="max-auto mb-3 text-center">
             <img

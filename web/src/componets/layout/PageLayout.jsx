@@ -1,9 +1,9 @@
 import React from "react";
 import Header from "../header/Header";
 
-function PageLayout({ title, children}) {
+function PageLayout({ title, children }) {
   return (
-    <div className="page-layout">
+    <div className="bg-gray-200 w-full h-full">
       <Header title={title} />
       <div className="container">{children}</div>
     </div>

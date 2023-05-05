@@ -1,21 +1,21 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || "http://localhost:3001/api/v1",
+  baseURL: process.env.REACT_APP_BASE_API_URL || 'http://localhost:3001/api/v1',
   withCredentials: true,
 });
 
 http.interceptors.response.use(
-  function (response) {
-    return response.data;
-  },
-  function (error) {
-    if (error?.response?.status === 401) {
-      console.error("unauthenticated, redirect to login");
-      localStorage.clear();
-      window.location.replace("/login");
+  (response) => response.data,
+  (error) => {
+    const status = error.response?.status;
+    if (status === 401 && !window.location.href.includes('login')) {
+      window.location.href = "/login";
+      return Promise.resolve();
+    } else {
+      return Promise.reject(error);
     }
-
-    return Promise.reject(error);
   }
 );
+
+export default http;
