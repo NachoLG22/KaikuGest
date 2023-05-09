@@ -21,11 +21,6 @@ module.exports.detail = (req, res, next) => {
   res.json(req.user);
 };
 
-module.exports.detailById = (req, res, next) => {
-  const { fiscalname, description, skills, email, location } = req.user;
-  const user = { fiscalname, description, skills, email, location };
-  res.json(user);
-};
 
 module.exports.delete = (req, res, next) => {
   User.deleteOne({ _id: req.user.id })

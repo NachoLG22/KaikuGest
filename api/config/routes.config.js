@@ -42,7 +42,7 @@ router.post("/logout", users.logout);
 router.get(
   "/profile",
   secureMid.isAuthenticated,
-  usersMid.exists,
+
   users.detail
 );
 router.delete("/profile", secureMid.isAuthenticated, users.delete);
