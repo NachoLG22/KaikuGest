@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
 
-const WORK_FACTOR = 10;
-
 const userSchema = new Schema(
   {
     name: {
@@ -39,10 +37,16 @@ const userSchema = new Schema(
       required: "Password is required",
       minlength: [8, "Your password needs at least 8 chars"],
     },
+
     location: {
       type: String,
-      required: "User location is required",
     },
+    projects: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Projects",
+      },
+    ],
   },
   {
     timestamps: true,
@@ -59,12 +63,16 @@ const userSchema = new Schema(
 );
 
 userSchema.pre("save", function (next) {
-  if (this.isModified("password")) {
+  const user = this;
+
+  if (user.isModified("password")) {
     bcrypt
-      .hash(this.password, WORK_FACTOR)
-      .then((hash) => {
-        this.password = hash;
-        next();
+      .genSalt(10)
+      .then((salt) => {
+        return bcrypt.hash(user.password, salt).then((hash) => {
+          user.password = hash;
+          next();
+        });
       })
       .catch(next);
   } else {

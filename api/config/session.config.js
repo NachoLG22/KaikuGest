@@ -2,11 +2,10 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const User = require("../models/user.model");
 
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost/kaikugest";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/kaikugest";
 
 module.exports.session = session({
-  secret: process.env.SESSION_SECRET || "kaiku secret",
+  secret: process.env.SESSION_SECRET || "India",
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -32,4 +31,4 @@ module.exports.loadSessionUser = (req, res, next) => {
   } else {
     next();
   }
-}
+};

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Router, Routes } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./componets/navbar/Navbar";
 import Footer from "./componets/footer/Footer";
@@ -12,6 +12,7 @@ import ProjectPage from "./pages/ProjectPage";
 import "./index.css";
 import CreateBudgetPage from "./pages/CreateBudgetPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
+import BudgetsPage from "./pages/BudgetsPage";
 
 function App() {
   return (
@@ -48,6 +49,14 @@ function App() {
                   element={
                     <PrivateRoute>
                       <CreateBudgetPage />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/projects/:projectId/budgets"
+                  element={
+                    <PrivateRoute>
+                      <BudgetsPage />
                     </PrivateRoute>
                   }
                 />

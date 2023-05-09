@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import projectsService from "../../../services/projects";
-import BudgetList from "../../budgets/buddets-list/BudgetList";
-import CreateBudgetPage from "../../../pages/CreateBudgetPage";
 
 function ProjectDetail() {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState();
+  const [budgets, setBudgets] = useState([]);
   const [activeTab, setActiveTab] = useState("project");
 
   useEffect(() => {
@@ -43,42 +42,6 @@ function ProjectDetail() {
               Project Details
             </button>
           </li>
-          <li className="border border-gray-800 mr-1">
-            <button
-              className={`${
-                activeTab === "budgets"
-                  ? "border border-gray-800  bg-gray-800  text-white"
-                  : "bg-gray-200 text-gray-600"
-              } rounded-t-md py-2 px-4 text-lg font-bold`}
-              onClick={() => setActiveTab("budgets")}
-            >
-              Budgets
-            </button>
-          </li>
-          <li className="border border-gray-800 mr-1">
-            <button
-              className={`${
-                activeTab === "invoices"
-                  ? "border border-gray-800  bg-gray-800  text-white"
-                  : "bg-gray-200 text-gray-600"
-              } rounded-t-md py-2 px-4 text-lg font-bold`}
-              onClick={() => setActiveTab("invoices")}
-            >
-              Invoices
-            </button>
-          </li>
-          <li className="border border-gray-800 mr-1">
-            <button
-              className={`${
-                activeTab === "cost"
-                  ? "border border-gray-800  bg-gray-800  text-white"
-                  : "bg-gray-200 text-gray-600"
-              } rounded-t-md py-2 px-4 text-lg font-bold`}
-              onClick={() => setActiveTab("cost")}
-            >
-              Cost
-            </button>
-          </li>
         </ul>
       </div>
       <div className="card border-gray-800 w-full">
@@ -102,25 +65,22 @@ function ProjectDetail() {
                 <h6 class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                   {project.description}.
                 </h6>
+                <p>{project.date}</p>
               </div>
               <br />
-              <Link to={`/projects/${project.id}/budget`}>
-                <button>New Budget</button>
-              </Link>
+              <div className="flex justify-between">
+                <button className="px-4 py-2 text-white bg-gray-800 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  <Link to={`/projects/${project.id}/budget`}>New Budget</Link>
+                </button>
+
+                <button className="px-4 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">
+                  <NavLink to={`/projects/${project.id}/budgets`}>
+                    Budgets
+                  </NavLink>
+                </button>
+              </div>
             </>
           )}
-        </div>
-        <div className={`card-body ${activeTab === "budgets" ? "" : "hidden"}`}>
-          <h2>Budgets</h2>
-          <BudgetList />
-        </div>
-        <div
-          className={`card-body ${activeTab === "invoices" ? "" : "hidden"}`}
-        >
-          <h2>Invoices</h2>
-        </div>
-        <div className={`card-body ${activeTab === "cost" ? "" : "hidden"}`}>
-          <h2>Cost</h2>
         </div>
       </div>
     </>

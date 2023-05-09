@@ -3,7 +3,6 @@ const createError = require("http-errors");
 
 module.exports.list = (req, res, next) => {
   const budgetId = req.params.budgetId || req.params.id;
-
   Invoice.find({ budget: budgetId })
     .then((invoices) => {
       if (invoices.length > 0) {
@@ -16,9 +15,13 @@ module.exports.list = (req, res, next) => {
 };
 
 module.exports.create = (req, res, next) => {
-  req.body.authors = [req.user.id];
-  Invoice.create(req.body)
-    .then((invoice) => res.status(201).json(invoice))
+  const params = {
+    budget: req.budget.id,
+    items: req.budget.items,
+  };
+  console.log(params);
+  Invoice.create(params)
+    .then((budget) => res.status(201).json(budget))
     .catch(next);
 };
 

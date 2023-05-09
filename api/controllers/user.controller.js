@@ -2,7 +2,16 @@ const User = require("../models/user.model");
 const createError = require("http-errors");
 const bcrypt = require("bcrypt");
 
+module.exports.list = (req, res, next) => {
+  User.find()
+    .then((users) => res.json(users))
+    .catch(next);
+};
+
 module.exports.create = (req, res, next) => {
+  if (req.file) {
+    user.imageUrl = req.file.path;
+  }
   User.create(req.body)
     .then((user) => res.status(201).json(user))
     .catch(next);
@@ -10,6 +19,12 @@ module.exports.create = (req, res, next) => {
 
 module.exports.detail = (req, res, next) => {
   res.json(req.user);
+};
+
+module.exports.detailById = (req, res, next) => {
+  const { fiscalname, description, skills, email, location } = req.user;
+  const user = { fiscalname, description, skills, email, location };
+  res.json(user);
 };
 
 module.exports.delete = (req, res, next) => {
@@ -37,6 +52,7 @@ module.exports.login = (req, res, next) => {
   }
 
   const { email, password } = req.body;
+
   User.findOne({ email })
     .then((user) => {
       if (!user) {

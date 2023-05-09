@@ -3,9 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import usersService from "../../services/users";
 
 function UserDetail() {
+  const [user, setUser] = useState();
   const { userId } = useParams();
   const navigate = useNavigate();
-  const [user, setUser] = useState();
+  
 
   useEffect(() => {
     async function fetchUser() {
@@ -46,12 +47,12 @@ function UserDetail() {
                   <span>{user && user.username}</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold mb-2">Bio:</span>
-                  <span>{user && user.bio}</span>
+                  <span className="font-bold mb-2">Fiscal Name:</span>
+                  <span>{user && user.fiscalname}</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold mb-2">Skills:</span>
-                  <span>{user && user.skills.join(", ")}</span>
+                  <span className="font-bold mb-2">Description:</span>
+                  <span>{user && user.description}</span>
                 </div>
               </div>
               <div className="pt-6 text-base leading-6 font-bold sm:text-lg sm:leading-7">

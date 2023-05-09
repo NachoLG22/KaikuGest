@@ -1,14 +1,18 @@
 const Project = require("../models/project.model");
 const createError = require("http-errors");
+const User = require("../models/user.model");
 
 module.exports.list = (req, res, next) => {
-  Project.find()
-    .then((projects) => res.json(projects))
+  Project.find({ authors: req.user })
+    .populate("authors")
+    .sort({ createdAt: "desc" })
+    .then((projects) => {
+      res.json(projects);
+    })
     .catch(next);
 };
 
 module.exports.create = (req, res, next) => {
-  console.log(req.body);
   req.body.authors = [req.user.id];
   Project.create(req.body)
     .then((project) => res.status(201).json(project))

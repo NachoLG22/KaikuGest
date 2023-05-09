@@ -13,6 +13,7 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
+
 const renderNavLinkclassName = ({ isActive }) =>
   isActive ? "nav-link active" : "nav-link";
 
@@ -23,6 +24,7 @@ function Navbar() {
     { to: "/", icon: faHome, text: "Home" },
     { to: "/projects", icon: faProjectDiagram, text: "Projects" },
     { to: "/profile", icon: faUser, text: "About Me" },
+ 
   ];
 
   return (

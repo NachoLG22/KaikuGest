@@ -1,28 +1,44 @@
 const Budget = require("../models/budget.model");
 const createError = require("http-errors");
 
-module.exports.list = (req, res, next) => {
-    const projectId = req.params.projectId || req.params.id;
-
-    Budget.find({ project: projectId })
-      .then((budgets) => {
-        if (budgets.length > 0) {
-          res.json(budgets)
-        } else {
-          next(createError(404, "Budgets not found"));
-        }
-      })
-      .catch(next);
-};
-
 module.exports.create = (req, res, next) => {
-  req.body.authors = [req.user.id];
-  Budget.create(req.body)
+  const params = {
+    project: req.project.id,
+    items: req.body.items,
+  };
+  console.log(params);
+  Budget.create(params)
     .then((budget) => res.status(201).json(budget))
     .catch(next);
 };
 
-module.exports.detail = (req, res, next) => res.json(req.budget);
+module.exports.list = (req, res, next) => {
+  const projectId = req.params.projectId || req.params.id;
+
+  Budget.find({ project: projectId })
+    .then((budgets) => {
+      if (budgets.length > 0) {
+        res.json(budgets);
+      } else {
+        next(createError(404, "Budgets not found"));
+      }
+    })
+    .catch(next);
+};
+
+module.exports.detail = (req, res, next) => {
+  Budget.findById(budgetId)
+    .populate("project")
+    .then((budget) => {
+      if (budget) {
+        req.budget = budget;
+        res.json(req.budget);
+      } else {
+        next(createError(404, "Budget not found"));
+      }
+    })
+    .catch(next);
+};
 
 module.exports.delete = (req, res, next) => {
   Budget.deleteOne({ _id: req.budget.id })
@@ -37,5 +53,3 @@ module.exports.update = (req, res, next) => {
     .then((budget) => res.json(budget))
     .catch(next);
 };
-
-
