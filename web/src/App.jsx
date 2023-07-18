@@ -45,7 +45,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/projects/:projectId/budget"
+                  path="/projects/:id/budget"
                   element={
                     <PrivateRoute>
                       <CreateBudgetPage />

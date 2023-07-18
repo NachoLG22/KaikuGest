@@ -1,0 +1,372 @@
+{
+	"info": {
+		"_postman_id": "802fbb7d-a298-433e-807f-abac3b5b51c4",
+		"name": "KaikuGest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26661837"
+	},
+	"item": [
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "Projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_API_URL}}/projects"
+					},
+					"response": []
+				},
+				{
+					"name": "Project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Project 2\",\r\n    \"projectNumber\": 5,\r\n    \"description\": \"lalalalalal222222alalal\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_API_URL}}/projects",
+							"host": [
+								"{{BASE_API_URL}}"
+							],
+							"path": [
+								"projects"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Project",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_API_URL}}/projects/6446741f3fe0ac8c121f7a5b"
+					},
+					"response": []
+				},
+				{
+					"name": "Project",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{BASE_API_URL}}/projects/6446741f3fe0ac8c121f7a5b"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Prueba update\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/projects/64466d633fe0ac8c121f7a58"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Users Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"location\": \"Lugo\",\r\n    \"password\": \"12345678\",\r\n    \"email\": \"a.garcia@gmail.com\",\r\n    \"description\": \"Profecsional con más de 15 años de experiencia en todo tipo de trabajos \",\r\n    \"fiscalname\": \"Hormigones S.L.\",\r\n    \"name\": \"Alberto García\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/signup"
+					},
+					"response": []
+				},
+				{
+					"name": "Users Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"a.garcia@gmail.com\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/login"
+					},
+					"response": []
+				},
+				{
+					"name": "User Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"skills\": [\"Alicatados\", \"Manpostería\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "User Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BASE_API_URL}}/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Users Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/logout"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Budgets",
+			"item": [
+				{
+					"name": "Budget",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item\": [\r\n        {\r\n            \"title\": \"Informe sobre daños en fachada\",\r\n            \"description\": \"Redacción de informe sobre daños en fachada y propuestas de mejoras y conclusiones\",\r\n            \"price\": 250\r\n        },\r\n        {\r\n            \"title\": \"Analisis en laborarotio d muestras extraidas\",\r\n            \"description\": \"Anilisis de muestra en laboratorio\",\r\n            \"price\": 150\r\n        }\r\n    ],\r\n    \"project\": \"64495b5ef1389c5de872474d\",\r\n    \"date\": \"2023/04/30\",\r\n    \"author\": \"6448f29f2b290b59dd6c7778\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/budget"
+					},
+					"response": []
+				},
+				{
+					"name": "Budgets",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/projects/6448f9066d1d89f7e873b3e5/budgets"
+					},
+					"response": []
+				},
+				{
+					"name": "Budget",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item\": [\r\n        {\r\n            \"title\": \"Informe sobre daños en fachada\",\r\n            \"description\": \"Redacción de informe sobre daños en fachada y propuestas de mejoras y conclusiones\",\r\n            \"price\": 250,\r\n            \"_id\": \"644991a48aca95f78ba3511e\"\r\n        },\r\n        {\r\n            \"title\": \"Analisis en laborarotio d muestras extraidas\",\r\n            \"description\": \"Anilisis de muestra en laboratorio\",\r\n            \"price\": 350,\r\n            \"_id\": \"644991a48aca95f78ba3511f\"\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/budgets/644991a48aca95f78ba3511d"
+					},
+					"response": []
+				},
+				{
+					"name": "Budget",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item\": [\r\n        {\r\n            \"title\": \"Informe sobre daños en fachada\",\r\n            \"description\": \"Redacción de informe sobre daños en fachada y propuestas de mejoras y conclusiones\",\r\n            \"price\": 250,\r\n            \"_id\": \"644991a48aca95f78ba3511e\"\r\n        },\r\n        {\r\n            \"title\": \"Analisis en laborarotio d muestras extraidas\",\r\n            \"description\": \"Anilisis de muestra en laboratorio\",\r\n            \"price\": 3550,\r\n            \"_id\": \"644991a48aca95f78ba3511f\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/budgets/64496171b163af96421f27c7"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invoices",
+			"item": [
+				{
+					"name": "Invoices",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item\": [\r\n        {\r\n            \"title\": \"Informe sobre daños en fachada\",\r\n            \"description\": \"Redacción de informe sobre daños en fachada y propuestas de mejoras y conclusiones\",\r\n            \"price\": 250\r\n        },\r\n        {\r\n            \"title\": \"Analisis en laborarotio d muestras extraidas\",\r\n            \"description\": \"Anilisis de muestra en laboratorio\",\r\n            \"price\": 150\r\n        }\r\n    ],\r\n    \"budget\" :  \"644a6d2a35b4a2e9b2fd9edd\",\r\n    \"project\": \"64495b5ef1389c5de872474d\",\r\n    \"date\": \"2023/04/29\",\r\n    \"author\": \"6448f29f2b290b59dd6c7778\",\r\n    \"client\": \"Marmoles Rajú\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/invoices"
+					},
+					"response": []
+				},
+				{
+					"name": "Invoices",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/budgets/644a6d2a35b4a2e9b2fd9edd/invoices"
+					},
+					"response": []
+				},
+				{
+					"name": "Invoice",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/invoices/644a81e2c76c2edce571c1b1"
+					},
+					"response": []
+				},
+				{
+					"name": "Budget",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BASE_API_URL}}/budgets/64496171b163af96421f27c7"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_API_URL",
+			"value": "http://localhost:3001/api/v1",
+			"type": "string"
+		}
+	]
+}

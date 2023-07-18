@@ -3,11 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
 import projectsService from "../../../services/projects";
 
+
 function ProjectDetail() {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState();
-  const [budgets, setBudgets] = useState([]);
   const [activeTab, setActiveTab] = useState("project");
 
   useEffect(() => {

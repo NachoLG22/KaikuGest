@@ -6,7 +6,6 @@ const budgetSchema = new Schema(
     project: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
-      required: true,
     },
     budgetNumber: {
       type: String,

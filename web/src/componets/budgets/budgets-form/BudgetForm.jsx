@@ -4,7 +4,7 @@ import budgetsService from "../../../services/budgets";
 import { useParams, useNavigate } from "react-router-dom";
 
 function BudgetForm() {
-  const { projectId } = useParams();
+  const { id } = useParams();
   const [items, setItems] = useState([]);
   const {
     register,
@@ -33,7 +33,7 @@ function BudgetForm() {
     try {
       setServerError();
       console.debug("Creating Budget...");
-      budget = await budgetsService.create(projectId, budget);
+      budget = await budgetsService.create(id, budget);
       navigate("/projects", { state: { budget } });
     } catch (error) {
       const errors = error.response?.data?.errors;

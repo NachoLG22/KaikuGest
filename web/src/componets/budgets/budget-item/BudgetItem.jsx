@@ -1,17 +1,19 @@
-import React from 'react'
-import { Link } from "react-router-dom"
+import React from "react";
+import { Link } from "react-router-dom";
 
-function BudgetItem(props) {
-  const { budget } = props;
-
+function BudgetItem({ budget }) {
   return (
     <>
       <div>Budget</div>
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-        <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">{budget.title}</h5>
+        <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
+          {budget.title}
+        </h5>
         <div className="flex items-baseline text-gray-900 dark:text-white">
           <span className="text-3xl font-semibold">$</span>
-          <span className="text-5xl font-extrabold tracking-tight">{budget.total}</span>
+          <span className="text-5xl font-extrabold tracking-tight">
+            {budget.total}
+          </span>
           <span className="ml-1 text-xl font-normal text-gray-500 dark:text-gray-400">
             /month
           </span>

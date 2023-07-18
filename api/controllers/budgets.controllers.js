@@ -1,6 +1,19 @@
 const Budget = require("../models/budget.model");
 const createError = require("http-errors");
 
+module.exports.list = (req, res, next) => {
+  Budget.find({ project: req.params.id })
+    .populate('project')
+    .then((budgets) => {
+      if (budgets.length > 0) {
+        res.json(budgets);
+      } else {
+        next(createError(404, "Budgets not found"));
+      }
+    })
+    .catch(next);
+};
+
 module.exports.create = (req, res, next) => {
   const params = {
     project: req.project.id,
@@ -9,20 +22,6 @@ module.exports.create = (req, res, next) => {
   console.log(params);
   Budget.create(params)
     .then((budget) => res.status(201).json(budget))
-    .catch(next);
-};
-
-module.exports.list = (req, res, next) => {
-  const projectId = req.params.projectId || req.params.id;
-
-  Budget.find({ project: projectId })
-    .then((budgets) => {
-      if (budgets.length > 0) {
-        res.json(budgets);
-      } else {
-        next(createError(404, "Budgets not found"));
-      }
-    })
     .catch(next);
 };
 

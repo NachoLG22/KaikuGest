@@ -1,7 +1,6 @@
 import http from "./base-api";
 
-const list = (query, id) =>
-  http.get(`/projects/${id}/budget`, { params: query });
+const list = (id) => http.get(`/projects/${id}/budgets`);
 
 const create = (id, budget) => http.post(`/projects/${id}/budget`, budget);
 

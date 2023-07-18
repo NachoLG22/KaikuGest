@@ -21,6 +21,7 @@ function NavbarProject() {
     }
     fetchProject();
   }, [projectId]);
+  console.log(projectId);
 
   return (
     <nav className="flex justify-between items-center px-4 py-2 bg-gray-800">
@@ -31,7 +32,7 @@ function NavbarProject() {
               <NavLink to={`/projects/${projectId}`}>Project</NavLink>
             </button>
             <a href="#" className="ml-4 text-gray-300 hover:text-white">
-              Budgets
+              <NavLink to={`/projects/${projectId}/budgets`}>Budgets</NavLink>
             </a>
             <a href="#" className="ml-4 text-gray-300 hover:text-white">
               Invoices
@@ -51,18 +52,3 @@ function NavbarProject() {
 }
 
 export default NavbarProject;
-
-{
-  /* <li>
-              <a href={`/projects/${projectId}`}>Project</a>
-            </li>
-            <li>
-              <a href={`/projects/${projectId}/budgets`}>Budgets</a>
-            </li>
-            <li>
-              <a href={`/projects/${projectId}/invoices`}>Invoices</a>
-            </li>
-            <li>
-              <a href={`/projects/${projectId}/costs`}>Costs</a>
-            </li> */
-}

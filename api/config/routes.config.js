@@ -50,7 +50,12 @@ router.patch("/profile", secureMid.isAuthenticated, users.update);
 
 //**Budgets */
 
-router.get("/projects/:id/budgets", secureMid.isAuthenticated, budgets.list);
+router.get(
+  "/projects/:id/budgets",
+  secureMid.isAuthenticated,
+  projectsMid.exists,
+  budgets.list
+);
 router.post(
   "/projects/:id/budget",
   secureMid.isAuthenticated,
