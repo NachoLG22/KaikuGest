@@ -1,28 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import usersService from "../../services/users";
+import React, { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthStore";
 
 function UserDetail() {
-  const [user, setUser] = useState();
-  const { userId } = useParams();
-  const navigate = useNavigate();
-  
-
-  useEffect(() => {
-    async function fetchUser() {
-      try {
-        const user = await usersService.detail(userId);
-        setUser(user);
-      } catch (error) {
-        console.error(error);
-        const statusCode = error.response?.status;
-        if (statusCode === 404) {
-          navigate("/projects");
-        }
-      }
-    }
-    fetchUser();
-  }, [userId]);
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="bg-gray-100 min-h-screen py-6 flex flex-col justify-center sm:py-12">
